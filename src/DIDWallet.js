@@ -1,7 +1,6 @@
 const crypto = require('crypto')
 const base64url = require('base64url')
-const _ = require('lodash')
-
+// lodash library functions
 const keyBy = require('lodash/keyBy')
 const pickBy = require('lodash/pickBy')
 const intersection = require('lodash/intersection')
