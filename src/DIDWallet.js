@@ -1,14 +1,9 @@
-const crypto = require('crypto')
-const base64url = require('base64url')
 // lodash library functions
-const keyBy = require('lodash/keyBy')
-const pickBy = require('lodash/pickBy')
-const intersection = require('lodash/intersection')
-const values = require('lodash/values')
+import { keyBy, pickBy, intersection, values } from 'lodash-es'
 
-const keyToKID = require('./keyToKID')
+import keyToKID from './keyToKID.js'
 
-const schema = require('./schema')
+import schema from './schema/index.js'
 
 class DIDWallet {
   constructor (data = {}) {
@@ -34,23 +29,24 @@ class DIDWallet {
               kid: keyToKID(k.mnemonic)
             }
         }
+        return null
       })
     }
     this.keys = keyBy(keys, 'kid')
   }
 
-  lock (password) {
-    const key = password
-    if (Object.keys(this.keys).length === 0) {
-      throw new Error('Cannot lock an empty wallet.')
-    }
-    const plaintext = JSON.stringify(this.keys)
-    const encrypt = crypto.createCipher('aes256', key)
-    let encrypted = encrypt.update(plaintext, 'utf8', 'hex')
-    encrypted += encrypt.final('hex')
-    this.ciphered = base64url.encode(Buffer.from(encrypted, 'hex'))
-    delete this.keys
-  }
+  // lock (password) {
+  //   const key = password
+  //   if (Object.keys(this.keys).length === 0) {
+  //     throw new Error('Cannot lock an empty wallet.')
+  //   }
+  //   const plaintext = JSON.stringify(this.keys)
+  //   const encrypt = crypto.createCipher('aes256', key)
+  //   let encrypted = encrypt.update(plaintext, 'utf8', 'hex')
+  //   encrypted += encrypt.final('hex')
+  //   this.ciphered = base64url.encode(Buffer.from(encrypted, 'hex'))
+  //   delete this.keys
+  // }
 
   addKey (key) {
     if (!this.keys) {
@@ -86,15 +82,15 @@ class DIDWallet {
     }
   }
 
-  unlock (password) {
-    const key = password
-    const decrypt = crypto.createDecipher('aes256', key)
-    const ciphertext = base64url.toBuffer(this.ciphered).toString('hex')
-    let decrypted = decrypt.update(ciphertext, 'hex', 'utf8')
-    decrypted += decrypt.final()
-    this.keys = JSON.parse(decrypted)
-    delete this.ciphered
-  }
+  // unlock (password) {
+  //   const key = password
+  //   const decrypt = crypto.createDecipher('aes256', key)
+  //   const ciphertext = base64url.toBuffer(this.ciphered).toString('hex')
+  //   let decrypted = decrypt.update(ciphertext, 'hex', 'utf8')
+  //   decrypted += decrypt.final()
+  //   this.keys = JSON.parse(decrypted)
+  //   delete this.ciphered
+  // }
 
   extractByTags (tags) {
     if (!this.keys) {
@@ -116,4 +112,4 @@ class DIDWallet {
   }
 }
 
-module.exports = DIDWallet
+export default DIDWallet

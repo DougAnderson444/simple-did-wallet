@@ -1,9 +1,9 @@
-const DIDWallet = require("./DIDWallet");
+import DIDWallet from './DIDWallet.js'
 
 const create = data => {
-  return new DIDWallet(data);
-};
+  return new DIDWallet(data)
+}
 
-module.exports = {
+export default {
   create
-};
+}

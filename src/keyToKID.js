@@ -1,19 +1,14 @@
-const crypto = require("crypto");
-const base64url = require("base64url");
+import { hash } from '@stablelib/sha256'
+import { encodeURLSafe } from '@stablelib/base64'
 
-module.exports = publicKey => {
+export default (publicKey) => {
   try {
-    const jwk = JSON.parse(publicKey);
+    const jwk = JSON.parse(publicKey)
     if (jwk.kid) {
-      return jwk.kid;
+      return jwk.kid
     }
   } catch (e) {
     // do nothing
   }
-  return base64url.encode(
-    crypto
-      .createHash("sha256")
-      .update(Buffer.from(publicKey))
-      .digest()
-  );
-};
+  return encodeURLSafe(hash(publicKey))
+}

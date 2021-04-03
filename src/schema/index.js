@@ -1,33 +1,33 @@
-const { Validator } = require("jsonschema");
+import { Validator } from 'jsonschema'
 
-const { stringify } = JSON;
+import assymetricWalletKey from './assymetricWalletKey.json'
+import mnemonicWalletKey from './mnemonicWalletKey.json'
+import didWalletKey from './didWalletKey.json'
 
-const assymetricWalletKey = require("./assymetricWalletKey.json");
-const mnemonicWalletKey = require("./mnemonicWalletKey.json");
-const didWalletKey = require("./didWalletKey.json");
+const { stringify } = JSON
 
 const schemas = {
   assymetricWalletKey,
   mnemonicWalletKey,
   didWalletKey
-};
+}
 
 class SchemaValidator {
   /**
    * Instantiates a SchemaValidator instance
    */
-  constructor() {
+  constructor () {
     //   eslint-disable-next-line
     this._validator = new Validator();
     Object.keys(schemas).forEach(sk => {
-      const s = schemas[sk];
+      const s = schemas[sk]
       //   eslint-disable-next-line
       if (!s) {
-        throw new Error(`No schema found for ${sk}`);
+        throw new Error(`No schema found for ${sk}`)
       }
       //   eslint-disable-next-line
       this._validator.addSchema(s, s.id);
-    });
+    })
   }
 
   /**
@@ -36,7 +36,7 @@ class SchemaValidator {
    * instances of that schema.
    * @param s The schema to add
    */
-  addSchema(s) {
+  addSchema (s) {
     //   eslint-disable-next-line
     this._validator.addSchema(s, s.id);
   }
@@ -47,8 +47,8 @@ class SchemaValidator {
    * @param s Schema to check against
    * @returns The results of the validation
    */
-  validate(instance, s, options) {
-    const jsonSchemaCompatibleObject = JSON.parse(stringify(instance));
+  validate (instance, s, options) {
+    const jsonSchemaCompatibleObject = JSON.parse(stringify(instance))
     //   eslint-disable-next-line
     return this._validator.validate(jsonSchemaCompatibleObject, s, options);
   }
@@ -59,13 +59,13 @@ class SchemaValidator {
    * @param s Schema to check against
    * @returns Whether or not the instance adheres to the schema
    */
-  isValid(instance, s) {
-    const result = this.validate(instance, s);
-    return result.errors.length === 0;
+  isValid (instance, s) {
+    const result = this.validate(instance, s)
+    return result.errors.length === 0
   }
 }
 
-module.exports = {
+export default {
   validator: new SchemaValidator(),
   schemas
-};
+}
