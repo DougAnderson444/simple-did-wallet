@@ -1,6 +1,6 @@
 {
   "name": "simple-did-wallet",
-  "version": "0.0.0-7",
+  "version": "0.0.2",
   "description": "A simple javascript key store built for DID and JSON-LD Signatures",
   "main": "./src/index.js",
   "scripts": {
@@ -22,11 +22,16 @@
   },
   "homepage": "https://github.com/transmute-industries/did-wallet#readme",
   "devDependencies": {
-    "jest": "^24.5.0"
+    "jest": "^26.6.3"
   },
   "dependencies": {
+    "@stablelib/aes": "^1.0.0",
+    "@stablelib/base64": "^1.0.0",
+    "@stablelib/hex": "^1.0.0",
+    "@stablelib/sha256": "^1.0.0",
     "base64url": "^3.0.1",
     "jsonschema": "^1.2.4",
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.15",
+    "lodash-es": "^4.17.21"
   }
 }
