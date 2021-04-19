@@ -32,7 +32,6 @@
     "@stablelib/sha256": "^1.0.0",
     "base64url": "^3.0.1",
     "jsonschema": "^1.2.4",
-    "lodash": "^4.17.15",
     "lodash-es": "^4.17.21"
   }
 }
