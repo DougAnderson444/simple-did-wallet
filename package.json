@@ -1,8 +1,9 @@
 {
   "name": "simple-did-wallet",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A simple javascript key store built for DID and JSON-LD Signatures",
   "main": "./src/index.js",
+  "type": "module",
   "scripts": {
     "test": "jest"
   },
