@@ -1,5 +1,5 @@
 // lodash library functions
-import { keyBy, pickBy, intersection, values } from 'lodash-es'
+import { intersection, unionWith, isEqual } from 'lodash-es'
 
 import keyToKID from './keyToKID.js'
 
@@ -32,7 +32,8 @@ class DIDWallet {
         return null
       })
     }
-    this.keys = keyBy(keys, 'kid')
+    // this.keys = keyBy(keys, 'kid')
+    this.keys = keys
   }
 
   // lock (password) {
@@ -76,10 +77,7 @@ class DIDWallet {
         break
     }
 
-    this.keys = {
-      ...this.keys,
-      [update.kid]: update
-    }
+    this.keys = unionWith(this.keys, [update], isEqual)
   }
 
   // unlock (password) {
@@ -98,10 +96,10 @@ class DIDWallet {
         'Cannot extractByTags from a ciphered wallet. You must unlock first.'
       )
     }
-    const keys = pickBy(this.keys, k => {
-      return intersection(k.tags, tags).length
+    const keys = this.keys.filter(k => {
+      return intersection(k.tags, tags).length // false if no intersections, otherwise true
     })
-    return values(keys)
+    return keys
   }
 
   export () {

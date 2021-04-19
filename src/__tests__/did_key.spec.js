@@ -1,5 +1,5 @@
-const didWallet = require("../index");
-const fixtures = require("./__fixtures__");
+import didWallet from "../index.js"
+import fixtures from './__fixtures__'
 
 describe("did_key", () => {
   it("can add did_key", () => {

@@ -1,6 +1,6 @@
-const didWallet = require("../index");
+import didWallet from "../index.js"
 
-const fixtures = require("./__fixtures__");
+import fixtures from './__fixtures__'
 
 describe("export", () => {
   it("throws when exporting plaintext", () => {
